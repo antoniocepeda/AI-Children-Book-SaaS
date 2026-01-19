@@ -121,18 +121,37 @@
   - [x] 2.10 Add logout button to protected layout header
 
 - [ ] 3.0 Book Creation Flow & Story Generation
-  - [ ] 3.1 Define TypeScript types in `types/book.ts`: `Book`, `Character`, `Page`, `BookPlan`, `BookInputs`, `BookStatus`
-  - [ ] 3.2 Build Create Book form page at `app/(protected)/create/page.tsx`
-  - [ ] 3.3 Create `BookForm` component with all PRD inputs: child name, age range, theme, setting, tone, character count, special detail (optional)
-  - [ ] 3.4 Create POST `/api/books` route that validates input, creates book record in Firestore with status `generating`, and returns `bookId`
-  - [ ] 3.5 Install OpenAI SDK (`openai`) and create client in `lib/openai/client.ts`
-  - [ ] 3.6 Create prompt templates in `lib/openai/prompts.ts` for generating Book Plan (title, characters[], pages[])
-  - [ ] 3.7 Create `generateBookPlan` function in `lib/openai/generate-book-plan.ts` that returns structured JSON
-  - [ ] 3.8 Create POST `/api/books/[bookId]/generate-story` route that calls OpenAI, parses Book Plan, and writes to Firestore (book title, characters subcollection, pages subcollection)
-  - [ ] 3.9 Update book status in Firestore through generation stages: `generating_story` → `generating_images` → `generating_pdf` → `complete`
-  - [ ] 3.10 Build `ProgressTracker` component that uses Firestore `onSnapshot` to display real-time status (queued/running/succeeded/failed per stage)
+  - [x] 3.0.1 Create demo config constant in `lib/config.ts` (expose `DEMO_ID` to shared client/server code)
+  - [x] 3.0.2 Add Zod schemas in `lib/validators/book-plan.ts`: `BookInputsSchema`, `CharacterSchema`, `PageSchema` (enforce 11 pages), `BookPlanSchema`
+  - [x] 3.0.3 Add daily creation limit (3/day) logic helper (count books created by ownerId in last 24h)
+  - [x] 3.1 Define TypeScript types in `types/book.ts`: include `BookStatus` (draft, generating_story, generating_images, generating_pdf, complete, failed), `Book` (with demoId, ownerId, metadata) and path builder helpers
+  - [x] 3.2 Build Create Book form page at `app/(protected)/create/page.tsx`
+  - [x] 3.3 Create `BookForm` component with all PRD inputs: child name, age range, theme, setting, tone, character count, special detail (optional)
+  - [x] 3.4 Create POST `/api/books` route (one-click creation + auto story generation):
+    - [x] Validate request body with `BookInputsSchema` (Zod)
+    - [x] Enforce daily creation cap (3/day)
+    - [x] Create book doc at `demos/{DEMO_ID}/books/{bookId}` with status `generating_story`, metadata, and `generationVersion: 1`
+    - [x] Auto-trigger story generation server-side (call internal `runStoryGeneration`)
+    - [x] Return `{ bookId }` immediately
+  - [x] 3.5 Install OpenAI SDK (`openai`) and create client in `lib/openai/client.ts`
+  - [x] 3.6 Create prompt templates in `lib/openai/prompts.ts`:
+    - [x] Enforce output as strict JSON
+    - [x] Enforce exactly 11 pages (cover + 10)
+    - [x] Enforce reading level rules (sentence count/vocab based on age)
+  - [x] 3.7 Create `generateBookPlan` function in `lib/openai/generate-book-plan.ts` (strict JSON + Zod validation):
+    - [x] Call OpenAI with strict requirements
+    - [x] Parse and validate with `BookPlanSchema.safeParse()`
+    - [x] Enforce logical constraints (cover exists, pages continuous)
+    - [x] Throw structured error on failure
+  - [ ] 3.8 Update `runStoryGeneration` (or internal logic) to:
+    - [ ] Verify book is under `demos/{DEMO_ID}`
+    - [ ] Generate + validate plan
+    - [ ] Write title, `characters` subcollection, `pages` subcollection
+    - [ ] Update status to `generating_images` on success
+  - [ ] 3.9 Update book status workflow to match new enum: `generating_story` → `generating_images` → `generating_pdf` → `complete` (or `failed`)
+  - [ ] 3.10 Build `ProgressTracker` component that subscribes to `demos/{DEMO_ID}/books/{bookId}` and maps simplified statuses to UI
   - [ ] 3.11 After form submit, redirect to `/books/[bookId]` and show progress tracker until complete
-  - [ ] 3.12 Handle OpenAI errors: catch failures, set book status to `failed`, store error message in Firestore, display user-friendly error in UI
+  - [ ] 3.12 Handle OpenAI errors: catch failures, set status to `failed`, write error metadata `{ message, stage }` to doc, log raw prompt/response server-side only
 
 - [ ] 4.0 Image Generation Pipeline
   - [ ] 4.1 Install Replicate SDK (`replicate`) and create client in `lib/replicate/client.ts`

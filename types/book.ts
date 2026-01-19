@@ -16,7 +16,7 @@ export type BookStatus =
 /**
  * Age range options for children's books
  */
-export type AgeRange = '2-4' | '4-6' | '6-8' | '8-10';
+export type AgeRange = '3-5' | '6-8' | '9-12';
 
 /**
  * Book theme options
@@ -40,6 +40,7 @@ export interface Character {
     description: string;
     visualSignature: string; // Detailed visual description for image consistency
     role: 'protagonist' | 'supporting' | 'antagonist';
+    imageUrl?: string; // Reference image URL
 }
 
 /**
@@ -47,7 +48,7 @@ export interface Character {
  */
 export interface Page {
     id: string;
-    pageNumber: number; // 1-10
+    pageNumber: number; // 0 for cover, 1-10 for content
     text: string;
     sceneDescription: string;
     characterIds: string[]; // Characters appearing on this page
@@ -61,7 +62,7 @@ export interface Page {
 export interface BookPlan {
     title: string;
     summary: string;
-    characters: Omit<Character, 'id'>[];
+    characters: Omit<Character, 'id' | 'imageUrl'>[];
     pages: Omit<Page, 'id' | 'imageUrl' | 'imageStatus'>[];
 }
 
@@ -71,10 +72,10 @@ export interface BookPlan {
 export interface BookInputs {
     childName: string;
     ageRange: AgeRange;
-    theme: BookTheme;
+    theme: string; // Allow flexible theme or use BookTheme
     setting: string;
-    tone: 'playful' | 'educational' | 'adventurous' | 'calm';
-    characterCount: 1 | 2 | 3;
+    tone: 'silly' | 'warm' | 'adventurous';
+    characterCount: 3 | 4 | 5;
     specialDetail?: string; // Optional special element to include
 }
 
@@ -83,6 +84,7 @@ export interface BookInputs {
  */
 export interface Book {
     id: string;
+    demoId: string;
     ownerId: string;
     inputs: BookInputs;
     title: string;
@@ -91,6 +93,14 @@ export interface Book {
     pdfUrl?: string;
     status: BookStatus;
     errorMessage?: string;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt: Date | any; // Timestamp
+    updatedAt: Date | any; // Timestamp
+    generationVersion: number;
+    progress?: {
+        story: 'pending' | 'generating' | 'complete' | 'failed';
+        images: 'pending' | 'generating' | 'complete' | 'failed';
+        pdf: 'pending' | 'generating' | 'complete' | 'failed';
+    };
+    storyModel?: string;
+    storyRequestId?: string;
 }

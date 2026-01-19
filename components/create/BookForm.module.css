@@ -1,0 +1,38 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: var(--card-background, white);
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+.sectionTitle {
+    font-family: var(--font-outfit), sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--foreground);
+    margin-bottom: 0.5rem;
+}
+
+.fieldGroup {
+    display: grid;
+    gap: 1rem;
+}
+
+@media (min-width: 640px) {
+    .fieldGroup {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.fullWidth {
+    grid-column: 1 / -1;
+}
+
+.actions {
+    margin-top: 1rem;
+}

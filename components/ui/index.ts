@@ -8,3 +8,4 @@ export { Input } from './Input';
 export { Select } from './Select';
 export { LoadingSpinner } from './LoadingSpinner';
 export { ErrorMessage } from './ErrorMessage';
+export * from './Textarea';
