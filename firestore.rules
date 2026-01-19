@@ -1,0 +1,99 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper function: Check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Helper function: Check if user owns the document
+    function isOwner(ownerId) {
+      return request.auth.uid == ownerId;
+    }
+    
+    // Helper function: Check if user owns the book
+    function isBookOwner(demoId, bookId) {
+      return isAuthenticated() && 
+        get(/databases/$(database)/documents/demos/$(demoId)/books/$(bookId)).data.ownerId == request.auth.uid;
+    }
+    
+    // ==========================================
+    // DEMO NAMESPACE: demos/{demoId}/...
+    // All data is scoped under a demo namespace
+    // ==========================================
+    match /demos/{demoId} {
+      
+      // ------------------------------------------
+      // BOOKS: demos/{demoId}/books/{bookId}
+      // ------------------------------------------
+      match /books/{bookId} {
+        // Users can only read their own books
+        allow read: if isAuthenticated() && isOwner(resource.data.ownerId);
+        
+        // Users can create books (ownerId must be set to their uid)
+        allow create: if isAuthenticated() && 
+          request.resource.data.ownerId == request.auth.uid;
+        
+        // Users can update their own books
+        allow update: if isAuthenticated() && 
+          isOwner(resource.data.ownerId) &&
+          request.resource.data.ownerId == resource.data.ownerId; // Cannot change owner
+        
+        // Users can delete their own books
+        allow delete: if isAuthenticated() && isOwner(resource.data.ownerId);
+        
+        // ------------------------------------------
+        // CHARACTERS: .../books/{bookId}/characters/{characterId}
+        // ------------------------------------------
+        match /characters/{characterId} {
+          allow read: if isBookOwner(demoId, bookId);
+          allow write: if isBookOwner(demoId, bookId);
+        }
+        
+        // ------------------------------------------
+        // PAGES: .../books/{bookId}/pages/{pageId}
+        // ------------------------------------------
+        match /pages/{pageId} {
+          allow read: if isBookOwner(demoId, bookId);
+          allow write: if isBookOwner(demoId, bookId);
+        }
+      }
+      
+      // ------------------------------------------
+      // USERS: demos/{demoId}/users/{userId}
+      // ------------------------------------------
+      match /users/{userId} {
+        // Users can only read their own profile
+        allow read: if isAuthenticated() && request.auth.uid == userId;
+        
+        // Users can create their own profile
+        allow create: if isAuthenticated() && request.auth.uid == userId;
+        
+        // Users can update their own profile
+        allow update: if isAuthenticated() && request.auth.uid == userId;
+        
+        // Users cannot delete their profile (soft delete only)
+        allow delete: if false;
+      }
+      
+      // ------------------------------------------
+      // JOBS: demos/{demoId}/jobs/{jobId}
+      // Background processing jobs - server-side only
+      // ------------------------------------------
+      match /jobs/{jobId} {
+        // No client access - server-side only via Admin SDK
+        allow read, write: if false;
+      }
+    }
+    
+    // ==========================================
+    // BLOCK ALL ROOT-LEVEL ACCESS
+    // No data should exist outside demos/{demoId}/...
+    // ==========================================
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

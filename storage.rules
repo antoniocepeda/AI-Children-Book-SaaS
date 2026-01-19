@@ -1,0 +1,47 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Helper function: Check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // ==========================================
+    // DEMO NAMESPACE: demos/{demoId}/...
+    // All storage files are scoped under a demo namespace
+    // ==========================================
+    match /demos/{demoId}/{allPaths=**} {
+      // Authenticated users can read files in their demo namespace
+      // Note: Fine-grained book ownership is enforced by Firestore
+      // Storage URLs are only accessible if the user has the book's pdfUrl/imageUrl
+      allow read: if isAuthenticated();
+      
+      // Only allow writes from authenticated users
+      // Server-side (API routes) will handle the actual uploads
+      allow write: if isAuthenticated();
+    }
+    
+    // ==========================================
+    // BOOK-SPECIFIC PATHS (more restrictive alternative)
+    // Uncomment this section and comment out the above for stricter control
+    // ==========================================
+    // match /demos/{demoId}/books/{bookId}/{allPaths=**} {
+    //   // Read: authenticated users (URL exposure controlled by Firestore)
+    //   allow read: if isAuthenticated();
+    //   
+    //   // Write: only through server-side API (Admin SDK)
+    //   // Client-side uploads are blocked
+    //   allow write: if false;
+    // }
+    
+    // ==========================================
+    // BLOCK ALL ROOT-LEVEL ACCESS
+    // No files should exist outside demos/{demoId}/...
+    // ==========================================
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

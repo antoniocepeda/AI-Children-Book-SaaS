@@ -1,3 +1,7 @@
+---
+description: Execute task lists from PRD files one sub-task at a time
+---
+
 # Task List Management (Process Rules)
 
 Guidelines for executing task lists in Markdown while implementing a PRD.
@@ -67,7 +71,7 @@ Keep implementation tidy, auditable, and junior‑dev friendly. Zero thrash, no 
 1. **Keep state fresh**
 
    * Mark tasks/sub‑tasks `[x]` immediately after completion.
-   * Insert new tasks discovered during work (label them clearly, e.g., “Follow‑up: …”).
+   * Insert new tasks discovered during work (label them clearly, e.g., "Follow‑up: …").
 
 2. **Maintain the `Relevant Files` section**
 
@@ -89,7 +93,7 @@ Keep implementation tidy, auditable, and junior‑dev friendly. Zero thrash, no 
 
 ### Notes
 - Unit tests live next to the code they test.
-- Use the project’s test runner (e.g., `npm test`).
+- Use the project's test runner (e.g., `npm test`).
 
 ## Tasks
 - [ ] 1.0 Parent Task Title

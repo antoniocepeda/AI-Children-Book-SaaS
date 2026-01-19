@@ -92,21 +92,21 @@
 
 ## Tasks
 
-- [ ] 1.0 Project Setup & Infrastructure
-  - [ ] 1.1 Initialize Next.js 14+ project with App Router (`npx create-next-app@latest --typescript --app --eslint`)
-  - [ ] 1.2 Configure TypeScript strict mode in `tsconfig.json` (`"strict": true`, `"noUncheckedIndexedAccess": true`)
-  - [ ] 1.3 Set up Prettier and integrate with ESLint (install `prettier`, `eslint-config-prettier`)
-  - [ ] 1.4 Create `.env.local.example` with placeholders for Firebase, OpenAI, Replicate keys, and `DEMO_ID` (e.g., `childrens-book-saas`)
-  - [ ] 1.5 Create `lib/config.ts` exporting `demoId` from `DEMO_ID` env var with validation (throw if missing)
-  - [ ] 1.6 Install Firebase SDK (`firebase`) and configure in `lib/firebase/config.ts`
-  - [ ] 1.7 Create typed Firestore helper in `lib/firebase/firestore.ts` with namespaced collection references under `demos/{demoId}/...` for `books`, `characters`, `pages`, `jobs` (demoId from env config)
-  - [ ] 1.8 Create Firebase Storage helper in `lib/firebase/storage.ts` for image/PDF uploads under namespaced paths `demos/{demoId}/books/{bookId}/...`
-  - [ ] 1.9 Set up folder structure: `app/`, `lib/`, `components/`, `types/`
-  - [ ] 1.10 Create shared UI components: `Button`, `Input`, `Select`, `LoadingSpinner`, `ErrorMessage`
-  - [ ] 1.11 Create root layout (`app/layout.tsx`) with base HTML, fonts, and global styles
-  - [ ] 1.12 Create `firestore.rules` requiring auth and restricting reads/writes to `demos/{demoId}/...` paths (users can only access their own books via `ownerId == request.auth.uid`)
-  - [ ] 1.13 Create `storage.rules` requiring auth and restricting reads/writes to `demos/{demoId}/...` paths
-  - [ ] 1.14 Verify namespace enforcement: create a test book and confirm all Firestore docs exist under `demos/{demoId}/...` and all Storage files exist under `demos/{demoId}/...` — nothing at root
+- [x] 1.0 Project Setup & Infrastructure
+  - [x] 1.1 Initialize Next.js 14+ project with App Router (`npx create-next-app@latest --typescript --app --eslint`)
+  - [x] 1.2 Configure TypeScript strict mode in `tsconfig.json` (`"strict": true`, `"noUncheckedIndexedAccess": true`)
+  - [x] 1.3 Set up Prettier and integrate with ESLint (install `prettier`, `eslint-config-prettier`)
+  - [x] 1.4 Create `.env.local.example` with placeholders for Firebase, OpenAI, Replicate keys, and `DEMO_ID` (e.g., `childrens-book-saas`)
+  - [x] 1.5 Create `lib/config.ts` exporting `demoId` from `DEMO_ID` env var with validation (throw if missing)
+  - [x] 1.6 Install Firebase SDK (`firebase`) and configure in `lib/firebase/config.ts`
+  - [x] 1.7 Create typed Firestore helper in `lib/firebase/firestore.ts` with namespaced collection references under `demos/{demoId}/...` for `books`, `characters`, `pages`, `jobs` (demoId from env config)
+  - [x] 1.8 Create Firebase Storage helper in `lib/firebase/storage.ts` for image/PDF uploads under namespaced paths `demos/{demoId}/books/{bookId}/...`
+  - [x] 1.9 Set up folder structure: `app/`, `lib/`, `components/`, `types/`
+  - [x] 1.10 Create shared UI components: `Button`, `Input`, `Select`, `LoadingSpinner`, `ErrorMessage`
+  - [x] 1.11 Create root layout (`app/layout.tsx`) with base HTML, fonts, and global styles
+  - [x] 1.12 Create `firestore.rules` requiring auth and restricting reads/writes to `demos/{demoId}/...` paths (users can only access their own books via `ownerId == request.auth.uid`)
+  - [x] 1.13 Create `storage.rules` requiring auth and restricting reads/writes to `demos/{demoId}/...` paths
+  - [x] 1.14 Verify namespace enforcement: create a test book and confirm all Firestore docs exist under `demos/{demoId}/...` and all Storage files exist under `demos/{demoId}/...` — nothing at root
 
 - [ ] 2.0 Authentication System
   - [ ] 2.1 Create Firebase Auth helpers in `lib/firebase/auth.ts` (signUp, signIn, signOut, onAuthStateChanged)
