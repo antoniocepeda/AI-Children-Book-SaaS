@@ -4,6 +4,39 @@ This log tracks high-level feature completions on the `main` branch.
 
 ---
 
+## [2026-01-19 11:50] Book Preview, PDF Export & Dashboard (Task 5.0)
+
+**Type:** feat  
+**Scope:** preview, pdf, dashboard  
+**Status:** ✅ Completed
+
+### Summary
+Implemented BookViewer flipbook component, PDF generation workflow, and completed the full book generation pipeline with automatic chaining.
+
+### Details
+- **Problem:** Need to display completed books and generate downloadable PDFs.
+- **Solution:** 
+  - Created `BookViewer` component with flipbook-style navigation and thumbnail strip
+  - Created `PageCard` component for displaying page images with text overlay
+  - Installed jsPDF and created `generatePdf` function for PDF creation
+  - Built `runPdfGeneration` workflow to generate and upload PDFs to Firebase Storage
+  - Linked all workflows: Story → Images → PDF → Complete
+  - Dashboard and book preview were already partially implemented, now enhanced with BookViewer
+- **Files:** 
+  - `components/preview/BookViewer.tsx` - Flipbook navigation component
+  - `components/preview/PageCard.tsx` - Page display component
+  - `lib/pdf/generate-pdf.ts` - Client-side PDF generation utility
+  - `lib/workflows/pdf-workflow.ts` - Server-side PDF workflow
+  - `lib/workflows/image-workflow.ts` - Updated to trigger PDF workflow
+  - `app/(protected)/books/[bookId]/page.tsx` - Integrated BookViewer
+- **Testing:** TypeScript compilation passed, Next.js build succeeded
+- **Notes:** Full pipeline now auto-chains: book creation → story gen → image gen → PDF gen → complete
+
+### Commit
+`git commit -m "feat(preview): complete book viewer, PDF generation, and full pipeline integration"`
+
+---
+
 ## [2026-01-19 11:32] Image Generation Pipeline (Task 4.0)
 
 **Type:** feat  

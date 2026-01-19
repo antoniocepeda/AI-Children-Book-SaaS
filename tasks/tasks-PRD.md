@@ -165,20 +165,20 @@
   - [x] 4.9 Handle Replicate errors: catch failures, set page status to `failed`, set book status to `failed`, log error details server-side
   - [x] 4.10 Implement per-character prompt injection to maintain consistency (include visual signature in every image prompt where that character appears)
 
-- [ ] 5.0 Book Preview, PDF Export & My Books Dashboard
-  - [ ] 5.1 Build book preview page at `app/(protected)/books/[bookId]/page.tsx` that fetches book, characters, and pages from Firestore
-  - [ ] 5.2 Create `BookViewer` component with flipbook-style navigation (cover first, then pages 1–10)
-  - [ ] 5.3 Create `PageCard` component displaying page image and text overlay/caption
-  - [ ] 5.4 Show generation progress if book status is not `complete`; show preview + download button when complete
-  - [ ] 5.5 Install PDF library (`jspdf` or `@react-pdf/renderer`) and create `generatePdf` function in `lib/pdf/generate-pdf.ts`
-  - [ ] 5.6 PDF generation: fetch all images, compose cover + 10 pages with text, output as PDF blob
-  - [ ] 5.7 Create POST `/api/books/[bookId]/pdf` route that generates PDF, uploads to Firebase Storage, updates book record with `pdfUrl`, sets status to `complete`
-  - [ ] 5.8 Add "Download PDF" button to preview page that fetches `pdfUrl` and triggers download
-  - [ ] 5.9 Build My Books dashboard at `app/(protected)/dashboard/page.tsx` that queries user's books from Firestore
-  - [ ] 5.10 Create `BookList` component displaying books with status badges (generating, complete, failed)
-  - [ ] 5.11 Create `BookCard` component with book title, cover thumbnail, status, "View" link, and "Download PDF" button (if complete)
-  - [ ] 5.12 Handle empty state: show friendly message + CTA to create first book if user has no books
-  - [ ] 5.13 Implement simple rate limiting: check book count created today before allowing new creation (e.g., max 3/day); return 429 if exceeded
+- [x] 5.0 Book Preview, PDF Export & My Books Dashboard
+  - [x] 5.1 Build book preview page at `app/(protected)/books/[bookId]/page.tsx` that fetches book, characters, and pages from Firestore
+  - [x] 5.2 Create `BookViewer` component with flipbook-style navigation (cover first, then pages 1–10)
+  - [x] 5.3 Create `PageCard` component displaying page image and text overlay/caption
+  - [x] 5.4 Show generation progress if book status is not `complete`; show preview + download button when complete
+  - [x] 5.5 Install PDF library (`jspdf` or `@react-pdf/renderer`) and create `generatePdf` function in `lib/pdf/generate-pdf.ts`
+  - [x] 5.6 PDF generation: fetch all images, compose cover + 10 pages with text, output as PDF blob
+  - [x] 5.7 Create POST `/api/books/[bookId]/pdf` route that generates PDF, uploads to Firebase Storage, updates book record with `pdfUrl`, sets status to `complete`
+  - [x] 5.8 Add "Download PDF" button to preview page that fetches `pdfUrl` and triggers download
+  - [x] 5.9 Build My Books dashboard at `app/(protected)/dashboard/page.tsx` that queries user's books from Firestore
+  - [x] 5.10 Create `BookList` component displaying books with status badges (generating, complete, failed)
+  - [x] 5.11 Create `BookCard` component with book title, cover thumbnail, status, "View" link, and "Download PDF" button (if complete)
+  - [x] 5.12 Handle empty state: show friendly message + CTA to create first book if user has no books
+  - [x] 5.13 Implement simple rate limiting: check book count created today before allowing new creation (e.g., max 3/day); return 429 if exceeded
 
 ---
 

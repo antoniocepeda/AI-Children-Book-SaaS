@@ -7,6 +7,7 @@ import { doc, onSnapshot } from 'firebase/firestore';
 import { db } from '@/lib/firebase/firestore';
 import { useAuthContext } from '@/lib/context/AuthContext';
 import { Button, LoadingSpinner } from '@/components/ui';
+import BookViewer from '@/components/preview/BookViewer';
 import { Book, BookStatus } from '@/types/book';
 import { demoId } from '@/lib/config';
 import styles from './page.module.css';
@@ -51,7 +52,7 @@ export default function BookPage() {
 
         // Real-time listener for book updates
         const bookRef = doc(db, `demos/${demoId}/books/${bookId}`);
-        
+
         const unsubscribe = onSnapshot(bookRef, (snapshot) => {
             if (!snapshot.exists()) {
                 setError('Book not found');
@@ -60,7 +61,7 @@ export default function BookPage() {
             }
 
             const data = snapshot.data() as Omit<Book, 'id'>;
-            
+
             // Verify ownership
             if (data.ownerId !== user.uid) {
                 setError('You do not have permission to view this book');
@@ -152,6 +153,11 @@ export default function BookPage() {
                 <div className={styles.errorCard}>
                     <strong>Error:</strong> {book.errorMessage}
                 </div>
+            )}
+
+            {/* Book Viewer - Show when images are complete */}
+            {(book.status === 'complete' || book.status === 'generating_pdf') && (
+                <BookViewer bookId={bookId} bookTitle={book.title} />
             )}
 
             {/* Actions */}

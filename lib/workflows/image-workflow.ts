@@ -144,6 +144,13 @@ export async function runImageGeneration(bookId: string): Promise<void> {
 
         console.log(`[Image Workflow] All images generated successfully for book ${bookId}`);
 
+        // 6. Trigger PDF generation workflow
+        const { runPdfGeneration } = await import('./pdf-workflow');
+
+        runPdfGeneration(bookId).catch(err => {
+            console.error(`[Image Workflow] PDF generation failed for book ${bookId}:`, err);
+        });
+
     } catch (error) {
         console.error(`[Image Workflow] Error generating images for book ${bookId}:`, error);
 
