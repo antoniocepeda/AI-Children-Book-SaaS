@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { Button, Input, Select, Textarea, ErrorMessage } from '@/components/ui';
 import { BookInputsSchema, BookInputs, AgeRangeSchema, ToneSchema } from '@/lib/validators/book-plan';
+import { getIdToken } from '@/lib/firebase/auth';
 import styles from './BookForm.module.css';
 
 export function BookForm() {
@@ -31,10 +32,17 @@ export function BookForm() {
         setSubmitError(null);
 
         try {
+            // Get auth token for API request
+            const token = await getIdToken();
+            if (!token) {
+                throw new Error('You must be logged in to create a book');
+            }
+
             const response = await fetch('/api/books', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify(data),
             });

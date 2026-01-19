@@ -85,5 +85,16 @@ export function getCurrentUser(): User | null {
     return auth.currentUser;
 }
 
+/**
+ * Get the ID token for the currently signed-in user
+ * Used for authenticating API requests
+ * @returns Promise resolving to ID token string, or null if not signed in
+ */
+export async function getIdToken(): Promise<string | null> {
+    const user = auth.currentUser;
+    if (!user) return null;
+    return user.getIdToken();
+}
+
 // Re-export User type for convenience
 export type { User, UserCredential };

@@ -12,6 +12,7 @@
     "verify-namespace:create": "ts-node scripts/verify-namespace.ts --create-test"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "@hookform/resolvers": "^5.2.2",
     "firebase": "^12.8.0",
     "next": "16.1.3",
@@ -19,6 +20,7 @@
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-hook-form": "^7.71.1",
+    "replicate": "^1.4.0",
     "zod": "^4.3.5"
   },
   "devDependencies": {

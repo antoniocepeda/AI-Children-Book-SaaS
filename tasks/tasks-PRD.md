@@ -120,7 +120,7 @@
   - [x] 2.9 Create user document in Firestore on first sign-up (`users/{uid}` with email, createdAt)
   - [x] 2.10 Add logout button to protected layout header
 
-- [ ] 3.0 Book Creation Flow & Story Generation
+- [x] 3.0 Book Creation Flow & Story Generation
   - [x] 3.0.1 Create demo config constant in `lib/config.ts` (expose `DEMO_ID` to shared client/server code)
   - [x] 3.0.2 Add Zod schemas in `lib/validators/book-plan.ts`: `BookInputsSchema`, `CharacterSchema`, `PageSchema` (enforce 11 pages), `BookPlanSchema`
   - [x] 3.0.3 Add daily creation limit (3/day) logic helper (count books created by ownerId in last 24h)
@@ -143,27 +143,27 @@
     - [x] Parse and validate with `BookPlanSchema.safeParse()`
     - [x] Enforce logical constraints (cover exists, pages continuous)
     - [x] Throw structured error on failure
-  - [ ] 3.8 Update `runStoryGeneration` (or internal logic) to:
-    - [ ] Verify book is under `demos/{DEMO_ID}`
-    - [ ] Generate + validate plan
-    - [ ] Write title, `characters` subcollection, `pages` subcollection
-    - [ ] Update status to `generating_images` on success
-  - [ ] 3.9 Update book status workflow to match new enum: `generating_story` → `generating_images` → `generating_pdf` → `complete` (or `failed`)
-  - [ ] 3.10 Build `ProgressTracker` component that subscribes to `demos/{DEMO_ID}/books/{bookId}` and maps simplified statuses to UI
-  - [ ] 3.11 After form submit, redirect to `/books/[bookId]` and show progress tracker until complete
-  - [ ] 3.12 Handle OpenAI errors: catch failures, set status to `failed`, write error metadata `{ message, stage }` to doc, log raw prompt/response server-side only
+  - [x] 3.8 Update `runStoryGeneration` (or internal logic) to:
+    - [x] Verify book is under `demos/{DEMO_ID}`
+    - [x] Generate + validate plan
+    - [x] Write title, `characters` subcollection, `pages` subcollection
+    - [x] Update status to `generating_images` on success
+  - [x] 3.9 Update book status workflow to match new enum: `generating_story` → `generating_images` → `generating_pdf` → `complete` (or `failed`)
+  - [x] 3.10 Build `ProgressTracker` component that subscribes to `demos/{DEMO_ID}/books/{bookId}` and maps simplified statuses to UI
+  - [x] 3.11 After form submit, redirect to `/books/[bookId]` and show progress tracker until complete
+  - [x] 3.12 Handle OpenAI errors: catch failures, set status to `failed`, write error metadata `{ message, stage }` to doc, log raw prompt/response server-side only
 
-- [ ] 4.0 Image Generation Pipeline
-  - [ ] 4.1 Install Replicate SDK (`replicate`) and create client in `lib/replicate/client.ts`
-  - [ ] 4.2 Design character consistency approach: generate a "visual signature" prompt segment for each character (species, hair color, outfit, distinguishing features) and store in Firestore
-  - [ ] 4.3 Create `generateCharacterPack` function in `lib/replicate/generate-character-pack.ts` that generates reference descriptors for each character
-  - [ ] 4.4 Create `generatePageImage` function in `lib/replicate/generate-page-image.ts` that takes scene description + character visual signatures and calls Replicate FLUX
-  - [ ] 4.5 Create POST `/api/books/[bookId]/generate-images` route that orchestrates: (a) generate character packs, (b) generate cover image, (c) generate 10 page images sequentially or in controlled parallel
-  - [ ] 4.6 Create `uploadImage` utility in `lib/utils/image-upload.ts` to upload generated images to Firebase Storage under `demos/{demoId}/books/{bookId}/pages/`
-  - [ ] 4.7 Update each page document in Firestore with `imageUrl` after successful upload
-  - [ ] 4.8 Update book status to `generating_pdf` after all 11 images are complete
-  - [ ] 4.9 Handle Replicate errors: catch failures, set page status to `failed`, set book status to `failed`, log error details server-side
-  - [ ] 4.10 Implement per-character prompt injection to maintain consistency (include visual signature in every image prompt where that character appears)
+- [x] 4.0 Image Generation Pipeline
+  - [x] 4.1 Install Replicate SDK (`replicate`) and create client in `lib/replicate/client.ts`
+  - [x] 4.2 Design character consistency approach: generate a "visual signature" prompt segment for each character (species, hair color, outfit, distinguishing features) and store in Firestore
+  - [x] 4.3 Create `generateCharacterPack` function in `lib/replicate/generate-character-pack.ts` that generates reference descriptors for each character
+  - [x] 4.4 Create `generatePageImage` function in `lib/replicate/generate-page-image.ts` that takes scene description + character visual signatures and calls Replicate FLUX
+  - [x] 4.5 Create POST `/api/books/[bookId]/generate-images` route that orchestrates: (a) generate character packs, (b) generate cover image, (c) generate 10 page images sequentially or in controlled parallel
+  - [x] 4.6 Create `uploadImage` utility in `lib/utils/image-upload.ts` to upload generated images to Firebase Storage under `demos/{demoId}/books/{bookId}/pages/`
+  - [x] 4.7 Update each page document in Firestore with `imageUrl` after successful upload
+  - [x] 4.8 Update book status to `generating_pdf` after all 11 images are complete
+  - [x] 4.9 Handle Replicate errors: catch failures, set page status to `failed`, set book status to `failed`, log error details server-side
+  - [x] 4.10 Implement per-character prompt injection to maintain consistency (include visual signature in every image prompt where that character appears)
 
 - [ ] 5.0 Book Preview, PDF Export & My Books Dashboard
   - [ ] 5.1 Build book preview page at `app/(protected)/books/[bookId]/page.tsx` that fetches book, characters, and pages from Firestore

@@ -4,6 +4,72 @@ This log tracks high-level feature completions on the `main` branch.
 
 ---
 
+## [2026-01-19 11:32] Image Generation Pipeline (Task 4.0)
+
+**Type:** feat  
+**Scope:** image-generation  
+**Status:** ✅ Completed
+
+### Summary
+Implemented the complete image generation pipeline using Replicate FLUX with character consistency through visual signatures.
+
+### Details
+- **Problem:** Need to generate consistent illustrations for each page of the children's book.
+- **Solution:** 
+  - Installed Replicate SDK and created client with FLUX Schnell model
+  - Built prompt templates with consistent children's book illustration style
+  - Created `generatePageImage` function that injects character visual signatures for consistency
+  - Built `uploadImageFromUrl` utility to download from Replicate and upload to Firebase Storage
+  - Created `runImageGeneration` workflow that orchestrates the full image generation process
+  - Auto-trigger image generation after story completion in `story-workflow.ts`
+- **Files:** 
+  - `lib/replicate/client.ts` - Replicate client with FLUX model config
+  - `lib/replicate/prompts.ts` - Illustration style prompt templates
+  - `lib/replicate/generate-page-image.ts` - Page image generation
+  - `lib/utils/image-upload.ts` - Firebase Storage upload utility
+  - `lib/workflows/image-workflow.ts` - Complete image workflow
+  - `lib/workflows/story-workflow.ts` - Updated to trigger image generation
+- **Testing:** TypeScript compilation passed, Next.js build succeeded
+- **Notes:** Using `flux-schnell` for fast, cost-effective image generation with character consistency via visual signatures
+
+### Commit
+`git commit -m "feat(image-generation): complete image pipeline with Replicate FLUX and Firebase Storage"`
+
+---
+
+## [2026-01-19 11:00] Complete Story Generation Flow + Migrate to Gemini
+
+**Type:** feat  
+**Scope:** story-generation  
+**Status:** ✅ Completed
+
+### Summary
+Implemented the complete story generation workflow and migrated from OpenAI to Google Gemini for story generation.
+
+### Details
+- **Problem:** Story workflow stub needed real AI integration. Also decided to use Gemini instead of OpenAI.
+- **Solution:** 
+  - Created `lib/gemini/` module with client, prompts, and generate-book-plan
+  - Built `runStoryGeneration` workflow that calls Gemini, validates response with Zod, writes characters and pages to Firestore subcollections
+  - Created `ProgressTracker` component with real-time Firestore listener for live status updates
+  - Added `getIdToken` helper and updated `BookForm` to send auth token with API requests
+  - Implemented comprehensive error handling that updates book status to 'failed' with error metadata
+- **Files:** 
+  - `lib/gemini/client.ts` - Gemini AI client with lazy initialization
+  - `lib/gemini/prompts.ts` - Story generation prompts
+  - `lib/gemini/generate-book-plan.ts` - Book plan generation with JSON mode + Zod validation
+  - `lib/workflows/story-workflow.ts` - Complete story generation workflow
+  - `components/create/ProgressTracker.tsx` - Real-time progress UI component
+  - `lib/firebase/auth.ts` - Added `getIdToken` helper
+  - `.env.local.example` - Updated to use GEMINI_API_KEY
+- **Testing:** TypeScript compilation passed, Next.js build succeeded
+- **Notes:** Using `gemini-1.5-flash` for fast, cost-effective story generation
+
+### Commit
+`git commit -m "feat(story-generation): complete story workflow with Gemini AI and progress tracking"`
+
+---
+
 ## [2026-01-19 01:30] Add Dashboard, Book Preview & Firebase Config
 
 **Type:** feat  
