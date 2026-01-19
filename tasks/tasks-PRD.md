@@ -108,17 +108,17 @@
   - [x] 1.13 Create `storage.rules` requiring auth and restricting reads/writes to `demos/{demoId}/...` paths
   - [x] 1.14 Verify namespace enforcement: create a test book and confirm all Firestore docs exist under `demos/{demoId}/...` and all Storage files exist under `demos/{demoId}/...` — nothing at root
 
-- [ ] 2.0 Authentication System
-  - [ ] 2.1 Create Firebase Auth helpers in `lib/firebase/auth.ts` (signUp, signIn, signOut, onAuthStateChanged)
-  - [ ] 2.2 Create `useAuth` hook in `lib/hooks/useAuth.ts` that provides `user`, `loading`, `error` state
-  - [ ] 2.3 Create auth context provider and wrap app in root layout
-  - [ ] 2.4 Build sign-up page at `app/(auth)/signup/page.tsx` with `SignupForm` component
-  - [ ] 2.5 Build login page at `app/(auth)/login/page.tsx` with `LoginForm` component
-  - [ ] 2.6 Create auth layout `app/(auth)/layout.tsx` that redirects to dashboard if already logged in
-  - [ ] 2.7 Create protected layout `app/(protected)/layout.tsx` that redirects to login if not authenticated
-  - [ ] 2.8 Add middleware in `middleware.ts` for route protection (redirect unauthenticated users from `/dashboard`, `/create`, `/books/*`)
-  - [ ] 2.9 Create user document in Firestore on first sign-up (`users/{uid}` with email, createdAt)
-  - [ ] 2.10 Add logout button to protected layout header
+- [x] 2.0 Authentication System
+  - [x] 2.1 Create Firebase Auth helpers in `lib/firebase/auth.ts` (signUp, signIn, signOut, onAuthStateChanged)
+  - [x] 2.2 Create `useAuth` hook in `lib/hooks/useAuth.ts` that provides `user`, `loading`, `error` state
+  - [x] 2.3 Create auth context provider and wrap app in root layout
+  - [x] 2.4 Build sign-up page at `app/(auth)/signup/page.tsx` with `SignupForm` component
+  - [x] 2.5 Build login page at `app/(auth)/login/page.tsx` with `LoginForm` component
+  - [x] 2.6 Create auth layout `app/(auth)/layout.tsx` that redirects to dashboard if already logged in
+  - [x] 2.7 Create protected layout `app/(protected)/layout.tsx` that redirects to login if not authenticated
+  - [x] 2.8 Add middleware in `middleware.ts` for route protection (redirect unauthenticated users from `/dashboard`, `/create`, `/books/*`)
+  - [x] 2.9 Create user document in Firestore on first sign-up (`users/{uid}` with email, createdAt)
+  - [x] 2.10 Add logout button to protected layout header
 
 - [ ] 3.0 Book Creation Flow & Story Generation
   - [ ] 3.1 Define TypeScript types in `types/book.ts`: `Book`, `Character`, `Page`, `BookPlan`, `BookInputs`, `BookStatus`

@@ -4,6 +4,29 @@ This log tracks high-level feature completions on the `main` branch.
 
 ---
 
+## [2026-01-18 23:20] Implement Authentication System (Task 2.0)
+
+**Type:** feat  
+**Scope:** auth  
+**Status:** ✅ Completed
+
+### Summary
+Implemented full authentication system with Firebase Auth, React Context, secure layouts, and user document creation.
+
+### Details
+- **Problem:** The app requires a secure way for users to sign up, log in, and manage their session state.
+- **Solution:** Implemented Firebase Authentication wrapped in React Context (`AuthContext`). Added `useAuth` hook, Login/Signup forms, route protection middleware, and layouts handling redirects.
+- **Files:** 
+  - `lib/firebase/auth.ts`, `lib/hooks/useAuth.ts`, `lib/context/AuthContext.tsx`
+  - `app/(auth)/*`, `app/(protected)/*`, `middleware.ts`
+  - `components/auth/*`, `components/layout/Header.tsx`, `components/providers/Providers.tsx`
+- **Testing:** Verified signup flow (creates user doc), login flow, logout, and protected route redirection.
+- **Notes:** Middleware uses matcher for route protection but actual redirection logic is client-side (Firebase Client SDK).
+
+### Commit
+`git commit -m "feat(auth): implement full authentication system (signup, login, context, protection)"`
+
+---
 ## [2026-01-18 22:51] Complete Project Setup & Infrastructure (Task 1.0)
 
 **Type:** feat  

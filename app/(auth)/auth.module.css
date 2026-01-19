@@ -1,0 +1,32 @@
+.container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: linear-gradient(135deg,
+            var(--background) 0%,
+            color-mix(in srgb, var(--primary) 5%, var(--background)) 100%);
+}
+
+.card {
+    background: var(--card-background, white);
+    border-radius: 1rem;
+    padding: 2.5rem;
+    box-shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 480px;
+}
+
+@media (max-width: 640px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .card {
+        padding: 1.5rem;
+        border-radius: 0.75rem;
+    }
+}
