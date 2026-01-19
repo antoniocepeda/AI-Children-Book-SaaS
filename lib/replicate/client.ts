@@ -24,13 +24,13 @@ export function getReplicateClient(): Replicate {
 
 /**
  * FLUX model for image generation
- * Using FLUX Schnell for fast generation (good for children's book illustrations)
+ * Using FLUX 2 Pro for highest quality children's book illustrations
  */
-export const FLUX_MODEL = 'black-forest-labs/flux-schnell';
+export const FLUX_MODEL = 'black-forest-labs/flux-2-pro';
 
 /**
  * Image dimensions for children's book pages
- * Using 1:1 aspect ratio for simplicity, can be adjusted
+ * FLUX 2 Pro supports various aspect ratios
  */
 export const IMAGE_CONFIG = {
     width: 1024,
@@ -39,3 +39,4 @@ export const IMAGE_CONFIG = {
     output_format: 'webp',
     output_quality: 90,
 } as const;
+

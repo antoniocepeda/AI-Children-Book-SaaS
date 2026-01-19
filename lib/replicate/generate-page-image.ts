@@ -29,26 +29,58 @@ export async function generatePageImage(input: PageImageInput): Promise<PageImag
     try {
         const replicate = getReplicateClient();
 
-        const output = await replicate.run(FLUX_MODEL, {
+        // Use predictions.create and wait for the result
+        // This handles both streaming and non-streaming models
+        const prediction = await replicate.predictions.create({
+            model: FLUX_MODEL,
             input: {
                 prompt,
                 ...IMAGE_CONFIG,
             },
         });
 
-        // FLUX returns an array of image URLs
-        const results = output as string[];
+        console.log(`[Image Gen] Prediction created: ${prediction.id}, status: ${prediction.status}`);
 
-        if (!results || results.length === 0) {
-            throw new Error('No image generated');
+        // Wait for the prediction to complete
+        let result = prediction;
+        while (result.status !== 'succeeded' && result.status !== 'failed') {
+            await new Promise(resolve => setTimeout(resolve, 2000)); // Poll every 2 seconds
+            result = await replicate.predictions.get(prediction.id);
+            console.log(`[Image Gen] Prediction ${prediction.id} status: ${result.status}`);
         }
 
-        const imageUrl = results[0];
-        if (!imageUrl) {
-            throw new Error('No image URL in response');
+        if (result.status === 'failed') {
+            throw new Error(`Prediction failed: ${result.error || 'Unknown error'}`);
         }
 
-        console.log(`[Image Gen] Page ${pageNumber} image generated: ${imageUrl.substring(0, 50)}...`);
+        console.log(`[Image Gen] Prediction output:`, JSON.stringify(result.output, null, 2));
+
+        // Extract image URL from output
+        let imageUrl: string;
+        const output = result.output;
+
+        if (typeof output === 'string') {
+            imageUrl = output;
+        } else if (Array.isArray(output) && output.length > 0) {
+            const firstItem = output[0];
+            if (typeof firstItem === 'string') {
+                imageUrl = firstItem;
+            } else if (firstItem && typeof firstItem === 'object' && 'url' in firstItem) {
+                imageUrl = (firstItem as { url: string }).url;
+            } else {
+                throw new Error(`Unexpected array item format: ${JSON.stringify(firstItem)}`);
+            }
+        } else if (output && typeof output === 'object' && 'url' in output) {
+            imageUrl = (output as { url: string }).url;
+        } else {
+            throw new Error(`Unexpected output format: ${JSON.stringify(output)}`);
+        }
+
+        if (!imageUrl || typeof imageUrl !== 'string') {
+            throw new Error('No valid image URL in response');
+        }
+
+        console.log(`[Image Gen] Page ${pageNumber} image generated: ${imageUrl.substring(0, 80)}...`);
 
         return {
             pageNumber,

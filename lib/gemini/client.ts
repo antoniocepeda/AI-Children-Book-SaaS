@@ -1,9 +1,8 @@
 import { GoogleGenerativeAI, GenerativeModel } from '@google/generative-ai';
 
 // Default model for story generation
-// gemini-1.5-flash is fast and cost-effective
-// gemini-1.5-pro is more capable for complex tasks
-export const STORY_MODEL = 'gemini-1.5-flash';
+// Using gemini-2.0-flash-exp for latest capabilities
+export const STORY_MODEL = 'gemini-2.0-flash-exp';
 
 // Lazy initialization to avoid build-time errors
 let _genAI: GoogleGenerativeAI | null = null;

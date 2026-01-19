@@ -184,14 +184,14 @@
 
 ## Definition of Done
 
-- [ ] All parent tasks completed
-- [ ] User can sign up, log in, and log out
-- [ ] User can create a book by filling out the form
-- [ ] System generates story (Book Plan) via OpenAI and persists to Firestore
-- [ ] System generates 11 images (cover + 10 pages) via Replicate with character consistency
-- [ ] User can preview the complete book (images + text)
-- [ ] User can download a PDF of the book
-- [ ] User can view all their books in the dashboard and re-download PDFs
-- [ ] Errors are handled gracefully with user-friendly messages
-- [ ] No regeneration actions exist (v1 constraint enforced)
-- [ ] All Firestore docs and Storage files exist under `demos/{demoId}/...` — no data written outside namespace
+- [x] All parent tasks completed
+- [x] User can sign up, log in, and log out
+- [x] User can create a book by filling out the form
+- [x] System generates story (Book Plan) via Gemini and persists to Firestore
+- [x] System generates 11 images (cover + 10 pages) via Replicate with character consistency
+- [x] User can preview the complete book (images + text)
+- [x] User can download a PDF of the book
+- [x] User can view all their books in the dashboard and re-download PDFs
+- [x] Errors are handled gracefully with user-friendly messages
+- [x] No regeneration actions exist (v1 constraint enforced)
+- [x] All Firestore docs and Storage files exist under `demos/{demoId}/...` — no data written outside namespace
