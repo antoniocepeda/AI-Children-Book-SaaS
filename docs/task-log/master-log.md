@@ -4,6 +4,33 @@ This log tracks high-level feature completions on the `main` branch.
 
 ---
 
+## [2026-01-19 01:30] Add Dashboard, Book Preview & Firebase Config
+
+**Type:** feat  
+**Scope:** dashboard  
+**Status:** ✅ Completed
+
+### Summary
+Implemented My Books dashboard with real-time Firestore queries, book preview page with progress tracking, landing page improvements, and Firebase CLI deployment configuration.
+
+### Details
+- **Problem:** Users need a dashboard to view their books and a preview page to see book details/progress.
+- **Solution:** Built dashboard with real-time Firestore listener for user's books, book preview page with status tracking, improved landing page design, and added Firebase CLI configuration for deploying rules and indexes.
+- **Files:** 
+  - `app/(protected)/dashboard/page.tsx` - My Books dashboard with Firestore queries
+  - `app/(protected)/books/[bookId]/page.tsx` - Book preview/progress page
+  - `app/page.tsx`, `app/page.module.css` - Landing page updates
+  - `app/layout.tsx` - Added Playfair Display font
+  - `.firebaserc`, `firebase.json`, `firestore.indexes.json` - Firebase CLI config
+  - `scripts/assign-demo-book.ts` - Utility for testing
+- **Testing:** Verified dashboard loads books, book preview shows details, Firebase rules/indexes deploy
+- **Notes:** Created composite index for `ownerId` + `createdAt` query on books collection
+
+### Commit
+`git commit -m "feat(dashboard): add dashboard, book preview, and Firebase config"`
+
+---
+
 ## [2026-01-19 00:15] Implement Book Creation Flow & Story Generation (Task 3.0)
 
 **Type:** feat  

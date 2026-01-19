@@ -1,0 +1,243 @@
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 24px;
+}
+
+.loadingContainer,
+.errorContainer {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    text-align: center;
+}
+
+.errorIcon {
+    font-size: 4rem;
+}
+
+.header {
+    margin-bottom: 32px;
+}
+
+.backLink {
+    color: #6366f1;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.backLink:hover {
+    color: #4f46e5;
+}
+
+/* Book Header */
+.bookHeader {
+    display: flex;
+    gap: 32px;
+    margin-bottom: 40px;
+    align-items: flex-start;
+}
+
+.coverPreview {
+    flex-shrink: 0;
+    width: 200px;
+    aspect-ratio: 3/4;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.coverImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.placeholderCover {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+}
+
+.bookInfo {
+    flex: 1;
+}
+
+.title {
+    font-family: var(--font-playfair), Georgia, serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 12px;
+    line-height: 1.2;
+}
+
+.meta {
+    font-size: 1rem;
+    color: #64748b;
+    margin-bottom: 16px;
+    text-transform: capitalize;
+}
+
+.summary {
+    font-size: 1.1rem;
+    color: #475569;
+    line-height: 1.6;
+}
+
+/* Status Card */
+.statusCard {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 32px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 32px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.statusCard.generating {
+    border-color: #c7d2fe;
+    background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+}
+
+.statusIcon {
+    font-size: 3rem;
+    flex-shrink: 0;
+}
+
+.statusInfo {
+    flex: 1;
+}
+
+.statusLabel {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 4px;
+}
+
+.statusDescription {
+    font-size: 1rem;
+    color: #64748b;
+}
+
+.progressBar {
+    width: 100%;
+    height: 6px;
+    background: #e2e8f0;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 16px;
+}
+
+.progressFill {
+    height: 100%;
+    width: 60%;
+    background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
+    border-radius: 3px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+/* Error Card */
+.errorCard {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 12px;
+    padding: 16px 20px;
+    color: #991b1b;
+    margin-bottom: 32px;
+}
+
+/* Actions */
+.actions {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 48px;
+    flex-wrap: wrap;
+}
+
+/* Details */
+.details {
+    background: #f8fafc;
+    border-radius: 16px;
+    padding: 32px;
+}
+
+.details h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 24px;
+}
+
+.detailsList {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.detailsList div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.detailsList dt {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.detailsList dd {
+    font-size: 1.1rem;
+    color: #1e293b;
+    text-transform: capitalize;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .bookHeader {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .coverPreview {
+        width: 160px;
+    }
+
+    .title {
+        font-size: 1.75rem;
+    }
+
+    .statusCard {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+
+    .actions > * {
+        width: 100%;
+    }
+}

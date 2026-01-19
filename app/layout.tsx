@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter, Outfit } from 'next/font/google';
+import { Inter, Outfit, Playfair_Display } from 'next/font/google';
 import { Providers } from '@/components/providers/Providers';
 import './globals.css';
 
@@ -21,6 +21,15 @@ const outfit = Outfit({
   display: 'swap',
 });
 
+/**
+ * Serif display font - Playfair Display for elegant headings
+ */
+const playfair = Playfair_Display({
+  variable: '--font-playfair',
+  subsets: ['latin'],
+  display: 'swap',
+});
+
 export const metadata: Metadata = {
   title: 'Storybook Magic - AI Children\'s Book Creator',
   description:
@@ -34,7 +43,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
+    <html lang="en" className={`${inter.variable} ${outfit.variable} ${playfair.variable}`}>
       <body>
         <Providers>{children}</Providers>
       </body>
