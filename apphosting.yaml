@@ -1,0 +1,35 @@
+# Firebase App Hosting configuration
+# https://firebase.google.com/docs/app-hosting/configure
+
+runConfig:
+  # Runtime environment variables
+  minInstances: 0
+  maxInstances: 10
+  concurrency: 80
+  cpu: 1
+  memoryMiB: 512
+
+env:
+  # Public environment variables (safe for client)
+  - variable: NEXT_PUBLIC_DEMO_ID
+    value: childrens-book-saas
+  - variable: NEXT_PUBLIC_FIREBASE_API_KEY
+    value: AIzaSyA7jpIim8dRjE4byAYxdLDRd_VStNqadCA
+  - variable: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+    value: htxwebworks-demos.firebaseapp.com
+  - variable: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+    value: htxwebworks-demos
+  - variable: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+    value: htxwebworks-demos.firebasestorage.app
+  - variable: NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+    value: "549904237450"
+  - variable: NEXT_PUBLIC_FIREBASE_APP_ID
+    value: 1:549904237450:web:5d7e9b0488bdcbb126fe73
+  
+  # Server-side secrets from Google Cloud Secret Manager
+  - variable: GEMINI_API_KEY
+    secret: GEMINI_API_KEY
+  - variable: REPLICATE_API_TOKEN
+    secret: REPLICATE_API_TOKEN
+  - variable: FIREBASE_SERVICE_ACCOUNT_KEY
+    secret: FIREBASE_SERVICE_ACCOUNT_KEY
