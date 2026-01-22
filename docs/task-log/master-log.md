@@ -4,6 +4,61 @@ This log tracks high-level feature completions on the `main` branch.
 
 ---
 
+## [2026-01-22 00:15] Add Demo Login Support
+
+**Type:** feat  
+**Scope:** auth  
+**Status:** ✅ Completed
+
+### Summary
+Added support for demo login using username "demo" in the login form.
+
+### Details
+- **Problem:** Users needed an easy way to access the demo account.
+- **Solution:** 
+  - Allow "demo" username to map to demo@storybook.demo email
+  - Support username-to-email normalization for any input
+  - Updated field label to "Email or username"
+- **Files:** 
+  - `components/auth/LoginForm.tsx` - Added username normalization
+  - `components/auth/LoginForm.module.css` - Added divider and demo button styles
+- **Testing:** Build passed
+- **Notes:** Any input without @ symbol gets @storybook.demo appended
+
+### Commit
+`feat(auth): add demo login support with username`
+
+---
+
+## [2026-01-22 00:10] Integrate Kontext Model with Character Refs (Task 4.0)
+
+**Type:** feat  
+**Scope:** images  
+**Status:** ✅ Completed
+
+### Summary
+Completed Task 4.0: Updated image workflow to use character reference images with FLUX Kontext Dev model for consistent character appearance across all pages.
+
+### Details
+- **Problem:** Page images needed to use the character reference images for visual consistency.
+- **Solution:** 
+  - Switched from FLUX 2 Pro to FLUX Kontext Dev model (50% cheaper)
+  - Added `imageUrl` parameter to `generatePageImage()` for reference images
+  - Created `prompts-v2.ts` with structured prompt builder and deterministic character ordering
+  - Fetch full character data with refs in image workflow
+  - Pass protagonist's ref image to all page generations
+- **Files:** 
+  - `lib/replicate/generate-page-image.ts` - Use Kontext model, accept imageUrl
+  - `lib/replicate/prompts-v2.ts` - Structured prompt builder (new)
+  - `lib/workflows/image-workflow.ts` - Fetch refs, pass to page gen
+- **Testing:** Build passed
+- **Notes:** Cost reduced from $0.05 to $0.025 per image
+
+### Commit
+`feat: integrate Kontext model with character refs for page generation`
+
+---
+
 ## [2026-01-21 20:14] Create Character Reference Generation Workflow (Task 3.0)
 
 **Type:** feat  
