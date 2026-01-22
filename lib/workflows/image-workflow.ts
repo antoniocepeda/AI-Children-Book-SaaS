@@ -8,6 +8,12 @@ interface Character {
     id: string;
     name: string;
     visualSignature: string;
+    description: string;
+    role: 'protagonist' | 'supporting' | 'antagonist';
+    /** Reference image URLs for character consistency */
+    refImageUrls?: string[];
+    /** Status of reference image generation */
+    refStatus?: 'pending' | 'generating' | 'complete' | 'failed';
 }
 
 interface Page {
@@ -53,7 +59,7 @@ export async function runImageGeneration(bookId: string): Promise<void> {
             updatedAt: FieldValue.serverTimestamp(),
         });
 
-        // 2. Fetch characters
+        // 2. Fetch characters with reference images
         const charactersSnapshot = await bookRef.collection('characters').get();
         const characters: Character[] = charactersSnapshot.docs.map(doc => ({
             id: doc.id,
@@ -62,7 +68,19 @@ export async function runImageGeneration(bookId: string): Promise<void> {
 
         console.log(`[Image Workflow] Found ${characters.length} characters`);
 
-        // Build character lookup for visual signatures
+        // Log character ref status and get protagonist ref for consistency
+        const charsWithRefs = characters.filter(c => c.refImageUrls?.length);
+        const protagonist = characters.find(c => c.role === 'protagonist');
+        const protagonistRefUrl = protagonist?.refImageUrls?.[0];
+        
+        console.log(`[Image Workflow] Characters with refs: ${charsWithRefs.length}/${characters.length}`);
+        if (protagonistRefUrl) {
+            console.log(`[Image Workflow] Protagonist "${protagonist?.name}" ref image will be used for consistency`);
+        } else {
+            console.log(`[Image Workflow] Warning: No protagonist ref image available, generating without reference`);
+        }
+
+        // Build character lookup for visual signatures and refs
         const characterById = new Map(characters.map(c => [c.id, c]));
 
         // 3. Fetch pages (ordered by pageNumber)
@@ -84,19 +102,21 @@ export async function runImageGeneration(bookId: string): Promise<void> {
                     imageStatus: 'generating',
                 });
 
-                // Get visual signatures for characters on this page
-                const characterSignatures = page.characterIds
-                    .map(id => characterById.get(id)?.visualSignature)
-                    .filter((sig): sig is string => !!sig);
+                // Get full character data for characters appearing on this page
+                const pageCharacters = page.characterIds
+                    .map(id => characterById.get(id))
+                    .filter((char): char is Character => !!char);
 
-                // Build input for image generation
+                // Build input for image generation with structured prompt and protagonist ref
                 const imageInput: PageImageInput = {
                     pageNumber: page.pageNumber,
                     sceneDescription: page.sceneDescription,
-                    characterVisualSignatures: characterSignatures,
+                    pageCharacters: pageCharacters,
+                    // Pass protagonist's reference image for character consistency
+                    imageUrl: protagonistRefUrl,
                 };
 
-                // Generate image
+                // Generate image using Kontext with reference
                 const result = await generatePageImage(imageInput);
 
                 // Upload to Firebase Storage

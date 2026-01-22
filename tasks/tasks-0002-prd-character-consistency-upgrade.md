@@ -54,14 +54,14 @@
   - [x] 3.7 Handle errors: set `refStatus: 'failed'` on character, `progress.characterRefs: 'failed'` on book
 
 - [ ] 4.0 Update Image Workflow to Use References
-  - [ ] 4.1 Create `lib/replicate/prompts-v2.ts` with `buildStructuredPrompt()` function
-  - [ ] 4.2 Implement deterministic character ordering (protagonist first, then by creation order)
-  - [ ] 4.3 Update `generatePageImage()` to accept optional `image_url` parameter
-  - [ ] 4.4 Switch `generatePageImage()` from FLUX_MODEL to KONTEXT_MODEL
-  - [ ] 4.5 Update `image-workflow.ts` to fetch character refs before generating pages
-  - [ ] 4.6 Pass protagonist's `refImageUrls[0]` as `image_url` to each page generation
-  - [ ] 4.7 Include all page characters' visual signatures in structured prompt format
-  - [ ] 4.8 Update `story-workflow.ts` to trigger `runCharacterRefGeneration()` after story completes, before image workflow
+  - [x] 4.1 Create `lib/replicate/prompts-v2.ts` with `buildStructuredPrompt()` function
+  - [x] 4.2 Implement deterministic character ordering (protagonist first, then by creation order)
+  - [x] 4.3 Update `generatePageImage()` to accept optional `image_url` parameter
+  - [x] 4.4 Switch `generatePageImage()` from FLUX_MODEL to KONTEXT_MODEL
+  - [x] 4.5 Update `image-workflow.ts` to fetch character refs before generating pages
+  - [x] 4.6 Pass protagonist's `refImageUrls[0]` as `image_url` to each page generation
+  - [x] 4.7 Include all page characters' visual signatures in structured prompt format
+  - [x] 4.8 Update `story-workflow.ts` to trigger `runCharacterRefGeneration()` after story completes, before image workflow
 
 - [ ] 5.0 Update Progress UI for Character Ref Step
   - [ ] 5.1 Update `ProgressTracker.tsx` to show "Generating character references" step between story and images

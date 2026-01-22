@@ -1,10 +1,14 @@
-import { getReplicateClient, FLUX_MODEL, IMAGE_CONFIG } from './client';
-import { buildPagePrompt } from './prompts';
+import { getReplicateClient, KONTEXT_MODEL } from './client';
+import { KONTEXT_IMAGE_CONFIG } from './kontext-client';
+import { buildStructuredPrompt, CharacterWithRefs } from './prompts-v2';
 
 export interface PageImageInput {
     pageNumber: number;
     sceneDescription: string;
-    characterVisualSignatures: string[];
+    /** Characters appearing on this page (for structured prompt) */
+    pageCharacters: CharacterWithRefs[];
+    /** Optional reference image URL for character consistency (Kontext model) */
+    imageUrl?: string;
 }
 
 export interface PageImageResult {
@@ -13,81 +17,90 @@ export interface PageImageResult {
 }
 
 /**
- * Generate an image for a single page using Replicate FLUX
+ * Generate an image for a single page using FLUX Kontext Dev
  * 
- * @param input - Page details including scene and characters
+ * @param input - Page details including scene, characters, and optional reference image
  * @returns Generated image URL
  */
 export async function generatePageImage(input: PageImageInput): Promise<PageImageResult> {
-    const { pageNumber, sceneDescription, characterVisualSignatures } = input;
+    const { pageNumber, sceneDescription, pageCharacters, imageUrl } = input;
     const isCover = pageNumber === 0;
 
-    console.log(`[Image Gen] Generating image for page ${pageNumber}...`);
+    console.log(`[Kontext] Generating page ${pageNumber} image${imageUrl ? ' with reference' : ''} (${pageCharacters.length} characters)...`);
 
-    const prompt = buildPagePrompt(sceneDescription, characterVisualSignatures, isCover);
+    // Build structured prompt with deterministic character ordering
+    const prompt = buildStructuredPrompt(sceneDescription, pageCharacters, isCover);
 
     try {
         const replicate = getReplicateClient();
 
+        // Build input parameters for Kontext model
+        const inputParams: Record<string, unknown> = {
+            prompt,
+            ...KONTEXT_IMAGE_CONFIG,
+        };
+
+        // Add reference image if provided (for character consistency)
+        if (imageUrl) {
+            inputParams.image_url = imageUrl;
+        }
+
         // Use predictions.create and wait for the result
         // This handles both streaming and non-streaming models
         const prediction = await replicate.predictions.create({
-            model: FLUX_MODEL,
-            input: {
-                prompt,
-                ...IMAGE_CONFIG,
-            },
+            model: KONTEXT_MODEL,
+            input: inputParams,
         });
 
-        console.log(`[Image Gen] Prediction created: ${prediction.id}, status: ${prediction.status}`);
+        console.log(`[Kontext] Prediction created: ${prediction.id}, status: ${prediction.status}`);
 
         // Wait for the prediction to complete
         let result = prediction;
         while (result.status !== 'succeeded' && result.status !== 'failed') {
             await new Promise(resolve => setTimeout(resolve, 2000)); // Poll every 2 seconds
             result = await replicate.predictions.get(prediction.id);
-            console.log(`[Image Gen] Prediction ${prediction.id} status: ${result.status}`);
+            console.log(`[Kontext] Prediction ${prediction.id} status: ${result.status}`);
         }
 
         if (result.status === 'failed') {
             throw new Error(`Prediction failed: ${result.error || 'Unknown error'}`);
         }
 
-        console.log(`[Image Gen] Prediction output:`, JSON.stringify(result.output, null, 2));
+        console.log(`[Kontext] Prediction output:`, JSON.stringify(result.output, null, 2));
 
         // Extract image URL from output
-        let imageUrl: string;
+        let generatedUrl: string;
         const output = result.output;
 
         if (typeof output === 'string') {
-            imageUrl = output;
+            generatedUrl = output;
         } else if (Array.isArray(output) && output.length > 0) {
             const firstItem = output[0];
             if (typeof firstItem === 'string') {
-                imageUrl = firstItem;
+                generatedUrl = firstItem;
             } else if (firstItem && typeof firstItem === 'object' && 'url' in firstItem) {
-                imageUrl = (firstItem as { url: string }).url;
+                generatedUrl = (firstItem as { url: string }).url;
             } else {
                 throw new Error(`Unexpected array item format: ${JSON.stringify(firstItem)}`);
             }
         } else if (output && typeof output === 'object' && 'url' in output) {
-            imageUrl = (output as { url: string }).url;
+            generatedUrl = (output as { url: string }).url;
         } else {
             throw new Error(`Unexpected output format: ${JSON.stringify(output)}`);
         }
 
-        if (!imageUrl || typeof imageUrl !== 'string') {
+        if (!generatedUrl || typeof generatedUrl !== 'string') {
             throw new Error('No valid image URL in response');
         }
 
-        console.log(`[Image Gen] Page ${pageNumber} image generated: ${imageUrl.substring(0, 80)}...`);
+        console.log(`[Kontext] Page ${pageNumber} image generated: ${generatedUrl.substring(0, 80)}...`);
 
         return {
             pageNumber,
-            imageUrl,
+            imageUrl: generatedUrl,
         };
     } catch (error) {
-        console.error(`[Image Gen] Failed to generate image for page ${pageNumber}:`, error);
+        console.error(`[Kontext] Failed to generate image for page ${pageNumber}:`, error);
         throw error;
     }
 }
