@@ -31,6 +31,11 @@ const STEP_INFO = {
         description: 'Creating characters, plot, and pages...',
         icon: '✍️',
     },
+    characterRefs: {
+        title: 'Generating Character References',
+        description: 'Creating consistent character appearances...',
+        icon: '👤',
+    },
     images: {
         title: 'Illustrating Pages',
         description: 'Generating beautiful artwork for each page...',
@@ -43,7 +48,7 @@ const STEP_INFO = {
     },
 };
 
-type StepKey = 'story' | 'images' | 'pdf';
+type StepKey = 'story' | 'characterRefs' | 'images' | 'pdf';
 
 export default function ProgressTracker({ bookId }: ProgressTrackerProps) {
     const [bookData, setBookData] = useState<BookData | null>(null);
@@ -130,7 +135,7 @@ export default function ProgressTracker({ bookId }: ProgressTrackerProps) {
             </div>
 
             <div className={styles.steps}>
-                {(['story', 'images', 'pdf'] as StepKey[]).map((step) => (
+                {(['story', 'characterRefs', 'images', 'pdf'] as StepKey[]).map((step) => (
                     <div key={step} className={getStepClass(step)}>
                         <div className={styles.iconWrapper}>
                             {renderStepIcon(step)}

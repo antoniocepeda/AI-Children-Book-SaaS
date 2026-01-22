@@ -63,7 +63,7 @@
   - [x] 4.7 Include all page characters' visual signatures in structured prompt format
   - [x] 4.8 Update `story-workflow.ts` to trigger `runCharacterRefGeneration()` after story completes, before image workflow
 
-- [ ] 5.0 Update Progress UI for Character Ref Step
-  - [ ] 5.1 Update `ProgressTracker.tsx` to show "Generating character references" step between story and images
-  - [ ] 5.2 Add progress state listener for `progress.characterRefs` from Firestore
-  - [ ] 5.3 Update progress bar/steps to reflect 4-stage flow: story → refs → images → pdf
+- [x] 5.0 Update Progress UI for Character Ref Step
+  - [x] 5.1 Update `ProgressTracker.tsx` to show "Generating character references" step between story and images
+  - [x] 5.2 Add progress state listener for `progress.characterRefs` from Firestore
+  - [x] 5.3 Update progress bar/steps to reflect 4-stage flow: story → refs → images → pdf
