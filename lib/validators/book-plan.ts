@@ -36,6 +36,9 @@ export const CharacterSchema = z.object({
     visualSignature: z.string(), // Description for image generation consistency
     description: z.string(),
     role: z.enum(['protagonist', 'supporting', 'antagonist']).optional().default('supporting'),
+    // Reference images for character consistency (added by ref generation workflow)
+    refImageUrls: z.array(z.string()).optional(),
+    refStatus: z.enum(['pending', 'generating', 'complete', 'failed']).optional(),
 });
 
 /**

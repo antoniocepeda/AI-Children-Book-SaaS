@@ -38,11 +38,11 @@
   - [x] 1.2 Add `KONTEXT_MODEL` export to `lib/replicate/client.ts` for backward compatibility
   - [x] 1.3 Verify Replicate API token works with Kontext Dev by checking model access
 
-- [ ] 2.0 Extend Character Schema with Reference Image Fields
-  - [ ] 2.1 Add `refImageUrls: z.array(z.string()).optional()` to `CharacterSchema` in `book-plan.ts`
-  - [ ] 2.2 Add `refStatus: z.enum(['pending', 'generating', 'complete', 'failed']).optional()` to `CharacterSchema`
-  - [ ] 2.3 Update `Character` type export to include new fields
-  - [ ] 2.4 Add `characterRefs` field to book progress type (if typed separately)
+- [x] 2.0 Extend Character Schema with Reference Image Fields
+  - [x] 2.1 Add `refImageUrls: z.array(z.string()).optional()` to `CharacterSchema` in `book-plan.ts`
+  - [x] 2.2 Add `refStatus: z.enum(['pending', 'generating', 'complete', 'failed']).optional()` to `CharacterSchema`
+  - [x] 2.3 Update `Character` type export to include new fields
+  - [x] 2.4 Add `characterRefs` field to book progress type (if typed separately)
 
 - [ ] 3.0 Create Character Reference Generation Workflow
   - [ ] 3.1 Create `lib/workflows/character-ref-workflow.ts` with `runCharacterRefGeneration(bookId)` function

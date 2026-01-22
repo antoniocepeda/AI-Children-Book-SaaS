@@ -40,7 +40,9 @@ export interface Character {
     description: string;
     visualSignature: string; // Detailed visual description for image consistency
     role: 'protagonist' | 'supporting' | 'antagonist';
-    imageUrl?: string; // Reference image URL
+    imageUrl?: string; // Reference image URL (legacy)
+    refImageUrls?: string[]; // Canonical reference images for character consistency
+    refStatus?: 'pending' | 'generating' | 'complete' | 'failed';
 }
 
 /**
@@ -98,6 +100,7 @@ export interface Book {
     generationVersion: number;
     progress?: {
         story: 'pending' | 'generating' | 'complete' | 'failed';
+        characterRefs: 'pending' | 'generating' | 'complete' | 'failed';
         images: 'pending' | 'generating' | 'complete' | 'failed';
         pdf: 'pending' | 'generating' | 'complete' | 'failed';
     };

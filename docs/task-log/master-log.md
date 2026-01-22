@@ -4,7 +4,33 @@ This log tracks high-level feature completions on the `main` branch.
 
 ---
 
-## [2026-01-21 19:38] Add FLUX Kontext Dev Model Configuration (Task 1.0)
+## [2026-01-21 20:04] Extend Character Schema with Reference Image Fields (Task 2.0)
+
+**Type:** feat  
+**Scope:** schema  
+**Status:** ✅ Completed
+
+### Summary
+Extended character schema and types with fields for reference images and generation status to support the character consistency workflow.
+
+### Details
+- **Problem:** Need to store character reference images and track their generation status.
+- **Solution:** 
+  - Added `refImageUrls` and `refStatus` to Zod CharacterSchema in validators
+  - Updated Character interface in types/book.ts with new fields
+  - Added `characterRefs` to BookProgress for 4-stage pipeline tracking
+  - Updated ProgressTracker component with new progress field
+- **Files:** 
+  - `lib/validators/book-plan.ts` - Added refImageUrls, refStatus to CharacterSchema
+  - `types/book.ts` - Updated Character interface and Book progress type
+  - `components/create/ProgressTracker.tsx` - Added characterRefs to progress interface
+- **Testing:** Build passed
+- **Notes:** New progress flow: story → characterRefs → images → pdf
+
+### Commit
+`git commit -m "feat(schema): extend character schema with reference image fields"`
+
+---
 
 **Type:** feat  
 **Scope:** replicate  

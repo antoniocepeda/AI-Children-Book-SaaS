@@ -13,6 +13,7 @@ interface ProgressTrackerProps {
 
 interface BookProgress {
     story: 'pending' | 'generating' | 'complete' | 'failed';
+    characterRefs: 'pending' | 'generating' | 'complete' | 'failed';
     images: 'pending' | 'generating' | 'complete' | 'failed';
     pdf: 'pending' | 'generating' | 'complete' | 'failed';
 }
@@ -88,6 +89,7 @@ export default function ProgressTracker({ bookId }: ProgressTrackerProps) {
 
     const progress = bookData.progress || {
         story: 'pending',
+        characterRefs: 'pending',
         images: 'pending',
         pdf: 'pending',
     };
