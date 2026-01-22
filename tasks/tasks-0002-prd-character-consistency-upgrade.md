@@ -53,7 +53,7 @@
   - [x] 3.6 Update book `progress.characterRefs` to 'complete' when all characters done
   - [x] 3.7 Handle errors: set `refStatus: 'failed'` on character, `progress.characterRefs: 'failed'` on book
 
-- [ ] 4.0 Update Image Workflow to Use References
+- [x] 4.0 Update Image Workflow to Use References
   - [x] 4.1 Create `lib/replicate/prompts-v2.ts` with `buildStructuredPrompt()` function
   - [x] 4.2 Implement deterministic character ordering (protagonist first, then by creation order)
   - [x] 4.3 Update `generatePageImage()` to accept optional `image_url` parameter
