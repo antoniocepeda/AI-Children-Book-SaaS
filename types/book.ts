@@ -8,6 +8,7 @@
 export type BookStatus =
     | 'draft'
     | 'generating_story'
+    | 'generating_character_refs'
     | 'generating_images'
     | 'generating_pdf'
     | 'complete'

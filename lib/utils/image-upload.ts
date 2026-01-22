@@ -91,3 +91,73 @@ export async function uploadCoverImage(
 ): Promise<UploadImageResult> {
     return uploadImageFromUrl(imageUrl, bookId, 0);
 }
+
+/**
+ * Upload character reference image to Firebase Storage
+ * 
+ * @param imageUrl - Source image URL (from Replicate/Kontext)
+ * @param bookId - Book ID for path organization
+ * @param characterId - Character ID for path organization
+ * @param refIndex - Reference image index (0 = front portrait, 1 = action pose)
+ * @returns Storage path and public URL
+ */
+export async function uploadCharacterRefImage(
+    imageUrl: string,
+    bookId: string,
+    characterId: string,
+    refIndex: number
+): Promise<UploadImageResult> {
+    console.log(`[Upload] Downloading and uploading character ref ${refIndex} for ${characterId}...`);
+
+    try {
+        // Download image from Replicate/Kontext
+        const response = await fetch(imageUrl);
+        if (!response.ok) {
+            throw new Error(`Failed to download image: ${response.status}`);
+        }
+
+        const arrayBuffer = await response.arrayBuffer();
+        const buffer = Buffer.from(arrayBuffer);
+
+        // Determine content type from response or default to webp
+        const contentType = response.headers.get('content-type') || 'image/webp';
+        const extension = contentType.includes('png') ? 'png' :
+            contentType.includes('jpeg') || contentType.includes('jpg') ? 'jpg' : 'webp';
+
+        // Build storage path under namespace
+        const filename = `ref-${refIndex}.${extension}`;
+        const storagePath = `demos/${demoId}/books/${bookId}/characters/${characterId}/${filename}`;
+
+        // Upload to Firebase Storage
+        const bucket = getStorageBucket();
+        const file = bucket.file(storagePath);
+
+        await file.save(buffer, {
+            metadata: {
+                contentType,
+                metadata: {
+                    bookId,
+                    characterId,
+                    refIndex: String(refIndex),
+                    uploadedAt: new Date().toISOString(),
+                },
+            },
+        });
+
+        // Make the file publicly accessible
+        await file.makePublic();
+
+        // Get public URL
+        const publicUrl = `https://storage.googleapis.com/${bucket.name}/${storagePath}`;
+
+        console.log(`[Upload] Character ref ${refIndex} uploaded to: ${storagePath}`);
+
+        return {
+            storagePath,
+            publicUrl,
+        };
+    } catch (error) {
+        console.error(`[Upload] Failed to upload character ref ${refIndex} for ${characterId}:`, error);
+        throw error;
+    }
+}

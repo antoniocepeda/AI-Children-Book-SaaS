@@ -54,7 +54,8 @@ export async function runStoryGeneration(bookId: string, inputs: BookInputs): Pr
         batch.update(bookRef, {
             title: bookPlan.title,
             'progress.story': 'complete',
-            status: 'generating_images',
+            'progress.characterRefs': 'pending',
+            status: 'generating_character_refs',
             storyModel: STORY_MODEL,
             updatedAt: FieldValue.serverTimestamp(),
         });
@@ -103,15 +104,15 @@ export async function runStoryGeneration(bookId: string, inputs: BookInputs): Pr
         await batch.commit();
 
         console.log(`[Story Workflow] Successfully wrote book plan to Firestore for book ${bookId}`);
-        console.log(`[Story Workflow] Status updated to 'generating_images'`);
+        console.log(`[Story Workflow] Status updated to 'generating_character_refs'`);
 
-        // 6. Trigger image generation workflow
+        // 6. Trigger character reference generation workflow
         // Import dynamically to avoid circular dependencies
-        const { runImageGeneration } = await import('./image-workflow');
+        const { runCharacterRefGeneration } = await import('./character-ref-workflow');
 
-        // Fire and forget - don't block on image generation
-        runImageGeneration(bookId).catch(err => {
-            console.error(`[Story Workflow] Image generation failed for book ${bookId}:`, err);
+        // Fire and forget - don't block on character ref generation
+        runCharacterRefGeneration(bookId).catch(err => {
+            console.error(`[Story Workflow] Character ref generation failed for book ${bookId}:`, err);
         });
 
 

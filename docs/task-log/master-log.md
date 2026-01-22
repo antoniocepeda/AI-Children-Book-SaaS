@@ -4,7 +4,35 @@ This log tracks high-level feature completions on the `main` branch.
 
 ---
 
-## [2026-01-21 20:04] Extend Character Schema with Reference Image Fields (Task 2.0)
+## [2026-01-21 20:14] Create Character Reference Generation Workflow (Task 3.0)
+
+**Type:** feat  
+**Scope:** workflows  
+**Status:** ✅ Completed
+
+### Summary
+Created the complete character reference generation workflow using FLUX Kontext Dev. Pipeline now generates 2 canonical reference images per character before page image generation.
+
+### Details
+- **Problem:** Need to generate reference images for each character to enable consistency.
+- **Solution:** 
+  - Created `lib/workflows/character-ref-workflow.ts` with full workflow
+  - Added `uploadCharacterRefImage` to image-upload utility
+  - Added `generating_character_refs` status to BookStatus
+  - Updated story-workflow to trigger character ref generation (not images)
+  - Pipeline chain: story → characterRefs → images → pdf
+- **Files:** 
+  - `lib/workflows/character-ref-workflow.ts` - New workflow
+  - `lib/utils/image-upload.ts` - Added uploadCharacterRefImage
+  - `lib/workflows/story-workflow.ts` - Updated to trigger refs
+  - `types/book.ts` - Added generating_character_refs status
+- **Testing:** Build passed
+- **Notes:** Each character gets 2 refs: front portrait and action pose
+
+### Commit
+`git commit -m "feat(workflows): create character reference generation workflow"`
+
+---
 
 **Type:** feat  
 **Scope:** schema  

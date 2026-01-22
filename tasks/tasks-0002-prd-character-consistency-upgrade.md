@@ -44,14 +44,14 @@
   - [x] 2.3 Update `Character` type export to include new fields
   - [x] 2.4 Add `characterRefs` field to book progress type (if typed separately)
 
-- [ ] 3.0 Create Character Reference Generation Workflow
-  - [ ] 3.1 Create `lib/workflows/character-ref-workflow.ts` with `runCharacterRefGeneration(bookId)` function
-  - [ ] 3.2 Implement fetching all characters from Firestore for the given book
-  - [ ] 3.3 For each character, generate 2 reference images (front portrait, 3/4 action pose)
-  - [ ] 3.4 Upload each ref image to Storage: `characters/{charId}/ref-0.webp`, `ref-1.webp`
-  - [ ] 3.5 Update character document with `refImageUrls` array and `refStatus: 'complete'`
-  - [ ] 3.6 Update book `progress.characterRefs` to 'complete' when all characters done
-  - [ ] 3.7 Handle errors: set `refStatus: 'failed'` on character, `progress.characterRefs: 'failed'` on book
+- [x] 3.0 Create Character Reference Generation Workflow
+  - [x] 3.1 Create `lib/workflows/character-ref-workflow.ts` with `runCharacterRefGeneration(bookId)` function
+  - [x] 3.2 Implement fetching all characters from Firestore for the given book
+  - [x] 3.3 For each character, generate 2 reference images (front portrait, 3/4 action pose)
+  - [x] 3.4 Upload each ref image to Storage: `characters/{charId}/ref-0.webp`, `ref-1.webp`
+  - [x] 3.5 Update character document with `refImageUrls` array and `refStatus: 'complete'`
+  - [x] 3.6 Update book `progress.characterRefs` to 'complete' when all characters done
+  - [x] 3.7 Handle errors: set `refStatus: 'failed'` on character, `progress.characterRefs: 'failed'` on book
 
 - [ ] 4.0 Update Image Workflow to Use References
   - [ ] 4.1 Create `lib/replicate/prompts-v2.ts` with `buildStructuredPrompt()` function
