@@ -49,3 +49,42 @@
     color: var(--primary-hover);
     text-decoration: underline;
 }
+
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--muted);
+    font-size: 0.8125rem;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+}
+
+.demoButton {
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--foreground);
+    background: transparent;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.demoButton:hover {
+    background: var(--surface-hover);
+    border-color: var(--primary);
+}
+
+.demoButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
