@@ -29,6 +29,13 @@ export function getReplicateClient(): Replicate {
 export const FLUX_MODEL = 'black-forest-labs/flux-2-pro';
 
 /**
+ * FLUX Kontext Dev model for character-consistent image generation
+ * Supports image_url parameter for reference-based generation
+ * Cost: $0.025/image (50% cheaper than FLUX 2 Pro)
+ */
+export const KONTEXT_MODEL = 'black-forest-labs/flux-kontext-dev';
+
+/**
  * Image dimensions for children's book pages
  * FLUX 2 Pro supports various aspect ratios
  */

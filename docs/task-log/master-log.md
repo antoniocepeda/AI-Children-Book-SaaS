@@ -4,6 +4,35 @@ This log tracks high-level feature completions on the `main` branch.
 
 ---
 
+## [2026-01-21 19:38] Add FLUX Kontext Dev Model Configuration (Task 1.0)
+
+**Type:** feat  
+**Scope:** replicate  
+**Status:** ✅ Completed
+
+### Summary
+Added FLUX Kontext Dev model configuration for character-consistent image generation. This model supports image references for maintaining character identity across pages at 50% lower cost.
+
+### Details
+- **Problem:** Current FLUX 2 Pro uses text-only prompts, causing character drift across book pages.
+- **Solution:** 
+  - Created `lib/replicate/kontext-client.ts` with Kontext Dev model constants and `generateKontextImage()` function
+  - Added `KONTEXT_MODEL` export to `lib/replicate/client.ts` for backward compatibility
+  - Created verification script to confirm API access
+- **Files:** 
+  - `lib/replicate/kontext-client.ts` - New Kontext Dev client with image ref support
+  - `lib/replicate/client.ts` - Added KONTEXT_MODEL constant
+  - `scripts/verify-kontext.ts` - API verification script
+  - `docs/0002-prd-character-consistency-upgrade.md` - New PRD
+  - `tasks/tasks-0002-prd-character-consistency-upgrade.md` - Task list
+- **Testing:** Verified model access via API, build passed
+- **Notes:** Kontext Dev costs $0.025/image vs $0.05 for FLUX 2 Pro
+
+### Commit
+`git commit -m "feat(replicate): add FLUX Kontext Dev model configuration"`
+
+---
+
 ## [2026-01-19 12:05] 🎉 MVP Complete!
 
 **Type:** milestone  
