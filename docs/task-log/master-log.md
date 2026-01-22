@@ -4,6 +4,32 @@ This log tracks high-level feature completions on the `main` branch.
 
 ---
 
+## [2026-01-22 00:30] Complete Character Consistency Upgrade (PRD 0002)
+
+**Type:** feat  
+**Scope:** ui  
+**Status:** ✅ Completed
+
+### Summary
+Completed Task 5.0: Updated ProgressTracker to show "Generating Character References" step. This completes the entire PRD 0002 - Character Consistency Upgrade.
+
+### Details
+- **Problem:** Progress UI needed to reflect the new 4-stage generation flow.
+- **Solution:** 
+  - Added `characterRefs` step to STEP_INFO with title and icon
+  - Updated steps array to 4-stage flow: story → characterRefs → images → pdf
+  - Existing Firestore listener already handles progress.characterRefs updates
+- **Files:** 
+  - `components/create/ProgressTracker.tsx` - Added characterRefs step
+  - `tasks/tasks-0002-prd-character-consistency-upgrade.md` - All tasks complete
+- **Testing:** Build passed
+- **Notes:** PRD 0002 fully implemented - character consistency via Kontext model
+
+### Commit
+`feat(ui): add character refs step to progress tracker`
+
+---
+
 ## [2026-01-22 00:15] Add Demo Login Support
 
 **Type:** feat  
